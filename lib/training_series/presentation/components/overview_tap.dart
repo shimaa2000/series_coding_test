@@ -14,131 +14,138 @@ class OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text(
-            'ABOUT THIS SERIES',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.sizeOf(context).width * .06,
+      child: SizedBox(
+      height:  MediaQuery.sizeOf(context).height ,
+        child: Column(
+          children: [
+            Text(
+              'ABOUT THIS SERIES',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.sizeOf(context).width * .06,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ReadMoreWidget(
-            text: series.description,
-          ),
-          VideoView(
-            url: series.overviewVideoUrl,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            color: Colors.grey.withOpacity(.5),
-            child: Column(
-              children: [
-                Row(
+            const SizedBox(
+              height: 10,
+            ),
+            ReadMoreWidget(
+              text: series.description,
+            ),
+            VideoView(
+              url: series.overviewVideoUrl,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.grey.withOpacity(.5),
+                child: Column(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(series.instructorInfo.imageUrl),
-                    ),
-                    Column(
+                    Row(
                       children: [
-                        Text(
-                          series.instructorInfo.jobTitle,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.sizeOf(context).width * .05,
-                          ),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(series.instructorInfo.imageUrl),
                         ),
-                        Text(
-                          series.instructorInfo.name,
-                          style: TextStyle(
-                            fontSize: MediaQuery.sizeOf(context).width * .04,
-                          ),
+                        Column(
+                          children: [
+                            Text(
+                              series.instructorInfo.jobTitle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.sizeOf(context).width * .05,
+                              ),
+                            ),
+                            Text(
+                              series.instructorInfo.name,
+                              style: TextStyle(
+                                fontSize: MediaQuery.sizeOf(context).width * .04,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ReadMoreWidget(
+                      text: series.instructorInfo.about,
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ReadMoreWidget(
-                  text: series.instructorInfo.about,
-                ),
-              ],
+              ),
             ),
-          ),
-          Text(
-            'TOTAL RUN TIME',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-              fontSize: MediaQuery.sizeOf(context).width * .05,
+            Text(
+              'TOTAL RUN TIME',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+                fontSize: MediaQuery.sizeOf(context).width * .05,
+              ),
             ),
-          ),
-          Text(
-            Duration(seconds: series.totalRunTime).toString(),
-            style: TextStyle(
-              fontSize: MediaQuery.sizeOf(context).width * .03,
+            Text(
+              Duration(seconds: series.totalRunTime).toString(),
+              style: TextStyle(
+                fontSize: MediaQuery.sizeOf(context).width * .03,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Difficulty'.toUpperCase(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                      fontSize: MediaQuery.sizeOf(context).width * .06,
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        'Difficulty'.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: MediaQuery.sizeOf(context).width * .06,
+                        ),
+                      ),
+                      Text(
+                        series.difficulty.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.sizeOf(context).width * .04,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    series.difficulty.name,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.sizeOf(context).width * .04,
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        'intensity'.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: MediaQuery.sizeOf(context).width * .05,
+                        ),
+                      ),
+                      Text(
+                        series.intensity,
+                        style: TextStyle(
+                          fontSize: MediaQuery.sizeOf(context).width * .03,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  Text(
-                    'intensity'.toUpperCase(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                      fontSize: MediaQuery.sizeOf(context).width * .05,
-                    ),
-                  ),
-                  Text(
-                    series.intensity,
-                    style: TextStyle(
-                      fontSize: MediaQuery.sizeOf(context).width * .03,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Text(
-            'classes'.toUpperCase(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: MediaQuery.sizeOf(context).width * .06,
             ),
-          ),
-      Expanded(child: ListView.builder(itemBuilder: (context, index) => VideoView(url: series.classes[index].videoUrl),))
+            Text(
+              'classes'.toUpperCase(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: MediaQuery.sizeOf(context).width * .06,
+              ),
+            ),
+        Expanded(child: ListView.builder(itemBuilder: (context, index) => VideoView(url: series.classes[index].videoUrl),))
 
-        ],
+          ],
+        ),
       ),
     );
   }

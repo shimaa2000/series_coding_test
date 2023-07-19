@@ -14,7 +14,7 @@ class SeriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SeriesCubit(sl()),
+      create: (context) => SeriesCubit(sl())..fetchSeriesDetails(),
       child: Scaffold(
         body: BlocConsumer<SeriesCubit, SeriesState>(
           listener: (context, state) {},
@@ -25,21 +25,24 @@ class SeriesScreen extends StatelessWidget {
               case RequestState.loaded:
                 return Column(
                   children: [
-                    Stack(
-                      children: [
-                        Image.network(
-                          '',
-                          height: MediaQuery.sizeOf(context).height / 3,
-                          width: double.infinity,
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ))
-                      ],
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height / 3,
+                      child: Stack(
+                        children: [
+                          Image.network(
+                            state.series!.imageUrl,
+                            height: MediaQuery.sizeOf(context).height / 3,
+                            width: double.infinity,
+                          ),
+                          const Positioned(
+                              top: 20,
+                              left: 20,
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ))
+                        ],
+                      ),
                     ),
                     Text(
                       state.series!.title,
@@ -68,38 +71,46 @@ class SeriesScreen extends StatelessWidget {
                             fontSize: MediaQuery.sizeOf(context).width * .04,
                           ),
                         )),
-                    DefaultTabController(
-                      length: 3,
-                      child: Builder(builder: (context) {
-                        final tabController = DefaultTabController.of(context);
-                        return Column(children: [
-                          TabBar(
-                            controller: tabController,
-                            indicatorColor: Colors.black,
-                            indicatorWeight: 3,
-                            labelColor: Colors.black,
-                            tabs: const [
-                              Tab(
-                                text: 'Overview',
-                              ),
-                              Tab(
-                                text: 'Classes',
-                              ),
-                              Tab(
-                                text: 'Community',
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                              child: TabBarView(controller: tabController, children: [
-                            OverviewTab(
-                              series: state.series!,
+                    Expanded(
+                      child: DefaultTabController(
+                        length: 3,
+                        child: Builder(builder: (context) {
+                          final tabController = DefaultTabController.of(context);
+                          return SingleChildScrollView(
+                            child: SizedBox(
+                              height: MediaQuery.sizeOf(context).height/2,
+                              child: Column(
+                                  children: [
+                                TabBar(
+                                  controller: tabController,
+                                  indicatorColor: Colors.black,
+                                  indicatorWeight: 3,
+                                  labelColor: Colors.black,
+                                  tabs: const [
+                                    Tab(
+                                      text: 'Overview',
+                                    ),
+                                    Tab(
+                                      text: 'Classes',
+                                    ),
+                                    Tab(
+                                      text: 'Community',
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                    child: TabBarView(controller: tabController, children: [
+                                  OverviewTab(
+                                    series: state.series!,
+                                  ),
+                                  const ClassesTab(),
+                                  const CommunityTab(),
+                                ]))
+                              ]),
                             ),
-                            const ClassesTab(),
-                            const CommunityTab(),
-                          ]))
-                        ]);
-                      }),
+                          );
+                        }),
+                      ),
                     )
                   ],
                 );
