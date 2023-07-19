@@ -1,8 +1,9 @@
-import 'package:coding_test/training_series/domain/entity/series.dart';
+import 'package:coding_test/training_series/core/services/service_locator.dart';
 import 'package:coding_test/training_series/presentation/screens/series_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  ServicesLocator().init();
   runApp(const MyApp());
 }
 
